@@ -41,8 +41,6 @@ df.describe()
 # 2. **Interaction term** TEMP×WSPM — wind dispersal changes with temperature
 # 3. **Gamma GLM** — second model for right-skewed non-negative data
 
-# %%
-# Why log? Check skewness
 print(f'PM2.5 skewness     : {df["PM25"].skew():.2f}  → right-skewed, NOT Gaussian')
 print(f'log_PM25 skewness  : {df["log_PM25"].skew():.2f}  → closer to Gaussian')
 
