@@ -45,7 +45,6 @@ df.head()
 # Three methods used:
 # 1. **Log-transform** — PM2.5 is right-skewed, log makes it Gaussian
 # 2. **Interaction term** TEMP×WSPM — wind dispersal changes with temperature
-# 3. **Gamma GLM** — second model for right-skewed non-negative data
 
 # %%
 # Why log? Check skewness
@@ -63,13 +62,6 @@ plt.tight_layout(); plt.show()
 # OLS with interaction term TEMP:WSPM
 ols = smf.ols('log_PM25 ~ TEMP + WSPM + TEMP:WSPM + NO2 + RAIN + C(station)', data=df).fit()
 ols.summary()
-
-# %%
-# Gamma GLM — generative model for non-negative skewed data 
-glm = smf.glm('PM25 ~ TEMP + WSPM + TEMP:WSPM + NO2 + RAIN + C(station)',
-               data=df,
-               family=sm.families.Gamma(link=sm.families.links.Log())).fit()
-glm.summary()
 
 # %% [markdown]
 # ## 4 — Item 7: Two Models on PM2.5
@@ -406,3 +398,5 @@ df['pscore'] = logit.predict_proba(X)[:, 1]
 print(f'\nPropensity score model: P(high_wind | TEMP, NO2, RAIN)')
 for cov, coef in zip(covariates, logit.coef_[0]):
     print(f'  {cov}: {coef:+.4f}')
+
+
